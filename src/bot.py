@@ -1,12 +1,13 @@
 import telebot
+import os
 from src.card import Card
 from src.constants import *
-from scr.one_user import OneUser
+from src.one_user import OneUser
 
 
 class Bot:
     def __init__(self):
-        self.TOKEN = '6632832265:AAECpbpAxqwQUZ0aWOaqexyVGM4n6sKCoz4'
+        self.TOKEN = os.getenv("BOT_TOKEN")
         self.bot = telebot.TeleBot(self.TOKEN)
         self.users = {}
         self.bot.message_handler(commands=['start'])(self.start)
@@ -21,7 +22,7 @@ class Bot:
         self.bot.send_message(chat_id=message.chat.id, text="Выберите действие:", reply_markup=markup)
 
     def rools(self, message):
-        self.bot.send_message(chat_id=message.chat.id, text=Rules)
+        self.bot.send_message(chat_id=message.chat.id, text=RULES)
         self.bot.message_handler(func=lambda message: message.text in ["Вернуться назад"])(self.start)
         markup = telebot.types.ReplyKeyboardMarkup(row_width=1)
         btn1 = telebot.types.KeyboardButton("Вернуться назад")
@@ -39,16 +40,16 @@ class Bot:
 
         @self.bot.message_handler(content_types=['text'])
         def get_text_messages(message):
-            if message.text not in comands:
+            if message.text not in COMANDS:
                 card_name = message.text.split()
-                if len(card_name) == 2 and card_name[0] in card_values and card_name[1] in suits:
+                if len(card_name) == 2 and card_name[0] in CARD_VALUES and card_name[1] in SUITS:
                     self.users[message.chat.id].add_card(
-                        Card(card_values.index(card_name[0]), suits.index(card_name[1])))
-                elif len(card_name) == 4 and card_name[0] in card_values and card_name[1] in suits and card_name[
-                    2] in card_values and card_name[3] in suits:
+                        Card(CARD_VALUES.index(card_name[0]), SUITS.index(card_name[1])))
+                elif len(card_name) == 4 and card_name[0] in CARD_VALUES and card_name[1] in SUITS and card_name[
+                    2] in CARD_VALUES and card_name[3] in SUITS:
                     self.users[message.chat.id].add_personal_cards(
-                        Card(card_values.index(card_name[0]), suits.index(card_name[1])),
-                        Card(card_values.index(card_name[2]), suits.index(card_name[3])))
+                        Card(CARD_VALUES.index(card_name[0]), SUITS.index(card_name[1])),
+                        Card(CARD_VALUES.index(card_name[2]), SUITS.index(card_name[3])))
                 else:
                     self.bot.send_message(chat_id=message.chat.id, text="Что-то НЕ то")
 
@@ -68,16 +69,16 @@ class Bot:
 
         @self.bot.message_handler(content_types=['text'])
         def get_text_messages(message):
-            if message.text not in comands:
+            if message.text not in COMANDS:
                 card_name = message.text.split()
-                if len(card_name) == 2 and card_name[0] in card_values and card_name[1] in suits:
+                if len(card_name) == 2 and card_name[0] in CARD_VALUES and card_name[1] in SUITS:
                     self.users[message.chat.id].add_card(
-                        Card(card_values.index(card_name[0]), suits.index(card_name[1])))
-                elif len(card_name) == 4 and card_name[0] in card_values and card_name[1] in suits and card_name[
-                    2] in card_values and card_name[3] in suits:
+                        Card(CARD_VALUES.index(card_name[0]), SUITS.index(card_name[1])))
+                elif len(card_name) == 4 and card_name[0] in CARD_VALUES and card_name[1] in SUITS and card_name[
+                    2] in CARD_VALUES and card_name[3] in SUITS:
                     self.users[message.chat.id].add_personal_cards(
-                        Card(card_values.index(card_name[0]), suits.index(card_name[1])),
-                        Card(card_values.index(card_name[2]), suits.index(card_name[3])))
+                        Card(CARD_VALUES.index(card_name[0]), SUITS.index(card_name[1])),
+                        Card(CARD_VALUES.index(card_name[2]), SUITS.index(card_name[3])))
                 else:
                     self.bot.send_message(chat_id=message.chat.id, text="Что-то НЕ то")
                 self.continue_the_game(message)

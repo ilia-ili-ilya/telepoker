@@ -2,15 +2,15 @@ from enum import Enum
 
 
 class HandValues(Enum):
-    High_card = 0
-    Pair = 1
-    Two_pairs = 2
-    Three_of_a_kind = 3
-    Straight = 4
-    Flush = 5
-    Full_house = 6
-    Four_of_a_kind = 7
-    Straight_flush = 8
+    high_card = 0
+    pair = 1
+    two_pairs = 2
+    three_of_a_kind = 3
+    straight = 4
+    flush = 5
+    full_house = 6
+    four_of_a_kind = 7
+    straight_flush = 8
 
     def __lt__(self, other):
         return self.value < other.value

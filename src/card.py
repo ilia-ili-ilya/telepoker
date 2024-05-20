@@ -1,4 +1,6 @@
 from random import randint
+
+
 class Card:
     def __init__(self, meaning, suit):
         self.meaning = meaning

@@ -1,5 +1,7 @@
 from src.card import Card
 from src.combination import Combination
+
+
 class OneUser:
     def __init__(self, count_of_players):
         self.count_of_players = count_of_players
@@ -24,7 +26,7 @@ class OneUser:
                 other_players_cards = []
                 other_players_cards_in_one_list = []
                 while len(personal_cards) < 2:
-                    personal_cards.append(Card.random_card(personal_cards+community_cards))
+                    personal_cards.append(Card.random_card(personal_cards + community_cards))
                 while len(community_cards) < 5:
                     community_cards.append(Card.random_card(personal_cards + community_cards))
                 for i in range(1, self.count_of_players):
@@ -33,10 +35,11 @@ class OneUser:
                         new_card = Card.random_card(personal_cards + community_cards + other_players_cards_in_one_list)
                         other_players_cards[-1].append(new_card)
                         other_players_cards_in_one_list.append(new_card)
-                our_comb = Combination(personal_cards+community_cards).find_the_hand_val_for_7()
+                our_comb = Combination(personal_cards + community_cards).find_the_hand_val_for_7()
                 others_combs = []
                 for i in range(1, self.count_of_players):
-                    others_combs.append(Combination(other_players_cards[i-1]+community_cards).find_the_hand_val_for_7())
+                    others_combs.append(
+                        Combination(other_players_cards[i - 1] + community_cards).find_the_hand_val_for_7())
                 if our_comb > max(others_combs):
                     ans += 1
                 elif our_comb == max(others_combs):
